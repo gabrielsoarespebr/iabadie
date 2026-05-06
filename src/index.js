@@ -11,23 +11,52 @@ faq.forEach((item) => {
   similarityModel.addDocument(item.question);
 });
 
-const userQuestion = "Estágio é obrigatório?";
+const userQuestion = "O que fazer após perder o prazo de matrícula?";
 
-let bestIndex = -1;
-let bestScore = 0;
+const resultList = [];
 
 similarityModel.tfidfs(userQuestion, (i, measure) => {
-  console.log("i: ", i);
-  console.log("measure: ", measure);
-  console.log("- - - - -");
-  if (measure > bestScore) {
-    bestScore = measure;
-    bestIndex = i;
-  }
+  const result = {
+    index: i,
+    score: measure,
+  };
+
+  console.log("---------");
+  console.log("Score:", measure);
+  console.log(faq[i].question);
+  console.log("---------");
+
+  resultList.push(result);
 });
 
-const bestAnswer = faq[bestIndex].answer;
+resultList.sort((a, b) => b.score - a.score);
 
+const threeBestResultList = resultList.slice(0, 3);
+
+const MIN_SCORE = 0.3;
+
+const filteredResultList = threeBestResultList.filter(
+  (item) => item.score > MIN_SCORE,
+);
+
+console.log();
+console.log();
+console.log();
 console.log("Pergunta: ", userQuestion);
-console.log("Resposta: ", bestAnswer);
-console.log("Score: ", bestScore);
+
+if (filteredResultList.length === 0) {
+  console.log("Nenhuma resposta relevante encontrada.");
+} else {
+  filteredResultList.forEach((item) => {
+    console.log("---------");
+    console.log(`Resposta (score: ${item.score.toFixed(2)})`);
+    console.log(faq[item.index].answer);
+    console.log("---------");
+  });
+}
+
+// const bestAnswer = faq[bestIndex].answer;
+
+// console.log("Pergunta: ", userQuestion);
+// console.log("Resposta: ", bestAnswer);
+// console.log("Score: ", bestScore);
