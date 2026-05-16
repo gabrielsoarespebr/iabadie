@@ -61,5 +61,12 @@
     "answer": "Sim, o aluno deve ter no mínimo 75% de presença.",
     "tagList": ["faltas", "regras"],
     "sourceList": ["https://exemplo.com/faltas"]
+  },
+  {
+    "id": 10,
+    "question": "O que fazer para destrancar o curso?",
+    "answer": "Faça um requerimento digital encaminhando para o PROTOCOLO GERAL, solicitando o que precisa",
+    "tagList": ["destrancamento", "curso", "destrancar"],
+    "sourceList": ["https://exemplo.com/destrancamento"]
   }
 ]
